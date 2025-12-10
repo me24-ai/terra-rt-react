@@ -7,11 +7,11 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  SafeAreaView,
   Platform,
   Alert,
 } from 'react-native';
 import { NativeEventEmitter, NativeModules } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
   initTerra,

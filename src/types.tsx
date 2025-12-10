@@ -8,6 +8,12 @@ export type SuccessMessage = {
   error: String | null;
 };
 
+export type ConnectedDeviceResponse = {
+  success: Boolean;
+  error: String | null;
+  device: Device | null;
+};
+
 export type Update = {
   ts: String | null;
   val: number | null;

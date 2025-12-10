@@ -361,12 +361,21 @@ public class TerraRtReactModule extends ReactContextBaseJavaModule {
       promise.resolve(map);
       return;
     }
-    
+
     this.terraRt.connectDevice(devices.get(deviceId), (success) -> {
       map.putBoolean("success", success);
       promise.resolve(map);
       return Unit.INSTANCE;
     });
+  }
+
+  @ReactMethod
+  public void getConnectedDevice(Promise promise){
+    WritableMap map = new WritableNativeMap();
+    map.putBoolean("success", false);
+    map.putString("error", "getConnectedDevice is not implemented on Android");
+    map.putNull("device");
+    promise.resolve(map);
   }
 }
 

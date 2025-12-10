@@ -1,5 +1,10 @@
 import { NativeModules, Platform } from 'react-native';
-import type { Device, GetUserId, SuccessMessage } from './types';
+import type {
+  ConnectedDeviceResponse,
+  Device,
+  GetUserId,
+  SuccessMessage,
+} from './types';
 import type { Connections, DataTypes } from './enums';
 
 export * from './types';
@@ -64,6 +69,18 @@ export function startDeviceScanWithCallback(
 
 export function connectDevice(device: Device): Promise<SuccessMessage> {
   return TerraRtReact.connectDevice(device.id);
+}
+
+export function getConnectedDevice(): Promise<ConnectedDeviceResponse> {
+  if (typeof TerraRtReact.getConnectedDevice !== 'function') {
+    return Promise.resolve({
+      success: false,
+      error: 'getConnectedDevice not implemented on this platform',
+      device: null,
+    });
+  }
+
+  return TerraRtReact.getConnectedDevice();
 }
 
 export function startRealtime(
