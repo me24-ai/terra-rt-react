@@ -7,6 +7,10 @@ class TerraRtReact: NSObject {
     public static var terraRt: TerraRT? = nil
     private static var scannedDevices: [String: Device] = [:]
 
+    static func cacheScannedDevice(_ device: Device) {
+        TerraRtReact.scannedDevices[device.deviceUUID] = device
+    }
+
     static func parseConnections(_ connections: String) -> Connections?{
         switch connections{
         case "BLE":
@@ -182,6 +186,12 @@ class TerraRtReact: NSObject {
 
         if let device_ = TerraRtReact.scannedDevices[device]{
             terraRT.connectDevice(device_){success in
+                resolve(["success": success])
+            }
+        }
+        else if let fallback = terraRT.getConnectedDevice(), fallback.deviceUUID == device {
+            TerraRtReact.cacheScannedDevice(fallback)
+            terraRT.connectDevice(fallback){success in
                 resolve(["success": success])
             }
         }

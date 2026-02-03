@@ -100,6 +100,9 @@ class BLWidget: UIView {
             bluetoothLowEnergyFromCache: withCache
         ) { [weak self] success in
             guard let self = self else { return }
+            if success, let connectedDevice = TerraRtReact.terraRt?.getConnectedDevice() {
+                TerraRtReact.cacheScannedDevice(connectedDevice)
+            }
             if let callback = self.onSuccessfulConnection {
                 callback(["success": success])
             }
