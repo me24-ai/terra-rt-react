@@ -184,19 +184,34 @@ class TerraRtReact: NSObject {
             return
         }
 
+        let respondOnce: (Bool, String?) -> Void = {
+            var hasResolved = false
+            return { success, maybeError in
+                if hasResolved {
+                    return
+                }
+                hasResolved = true
+                if let message = maybeError {
+                    resolve(["success": success, "error": message])
+                } else {
+                    resolve(["success": success])
+                }
+            }
+        }()
+
         if let device_ = TerraRtReact.scannedDevices[device]{
             terraRT.connectDevice(device_){success in
-                resolve(["success": success])
+                respondOnce(success, nil)
             }
         }
         else if let fallback = terraRT.getConnectedDevice(), fallback.deviceUUID == device {
             TerraRtReact.cacheScannedDevice(fallback)
             terraRT.connectDevice(fallback){success in
-                resolve(["success": success])
+                respondOnce(success, nil)
             }
         }
         else{
-            resolve(["success": false, "error": "Device not found"])
+            respondOnce(false, "Device not found")
         }
     }
 
