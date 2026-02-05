@@ -11,13 +11,13 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "13.0", :watchos => "8.0" }
   s.source       = { :git => "https://github.com/tryterra/terra-rt-react.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   s.frameworks = ['HealthKit']
   s.dependency "React-Core"
-  s.dependency "TerraRTiOS", "=0.3.2"
+  s.dependency "TerraRTiOS", "= 0.3.12"
 
 
   # Don't install the dependencies when we run `pod install` in the old architecture.
