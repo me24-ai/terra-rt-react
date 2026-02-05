@@ -253,14 +253,8 @@ class TerraRtReact: NSObject {
             resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
             return
         }
-        terraRT.pauseWatchOSWorkout { [weak self] success, error in
-            DispatchQueue.main.async {
-                if success {
-                    resolve(["success": true])
-                } else {
-                    resolve(["success": false, "error": error?.localizedDescription ?? "Failed to pause workout"])
-                }
-            }
+        terraRT.pauseWatchOSWorkout { success in
+            resolve(["success": success])
         }
     }
 
@@ -270,14 +264,8 @@ class TerraRtReact: NSObject {
             resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
             return
         }
-        terraRT.resumeWatchOSWorkout { [weak self] success, error in
-            DispatchQueue.main.async {
-                if success {
-                    resolve(["success": true])
-                } else {
-                    resolve(["success": false, "error": error?.localizedDescription ?? "Failed to resume workout"])
-                }
-            }
+        terraRT.resumeWatchOSWorkout { success in
+            resolve(["success": success])
         }
     }
 
@@ -287,14 +275,8 @@ class TerraRtReact: NSObject {
             resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
             return
         }
-        terraRT.stopWatchOSWorkout { [weak self] success, error in
-            DispatchQueue.main.async {
-                if success {
-                    resolve(["success": true])
-                } else {
-                    resolve(["success": false, "error": error?.localizedDescription ?? "Failed to stop workout"])
-                }
-            }
+        terraRT.stopWatchOSWorkout { success in
+            resolve(["success": success])
         }
     }
 }
