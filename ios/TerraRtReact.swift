@@ -246,4 +246,34 @@ class TerraRtReact: NSObject {
             resolve(["success": false, "error": error.localizedDescription])
         }
     }
+
+    @objc(pauseWatchOSWorkout:withRejecter:)
+    func pauseWatchOSWorkout(resolve: @escaping RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
+        guard let terraRT = TerraRtReact.terraRt else {
+            resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
+            return
+        }
+        terraRT.pauseWatchOSWorkout()
+        resolve(["success": true])
+    }
+
+    @objc(resumeWatchOSWorkout:withRejecter:)
+    func resumeWatchOSWorkout(resolve: @escaping RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
+        guard let terraRT = TerraRtReact.terraRt else {
+            resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
+            return
+        }
+        terraRT.resumeWatchOSWorkout()
+        resolve(["success": true])
+    }
+
+    @objc(stopWatchOSWorkout:withRejecter:)
+    func stopWatchOSWorkout(resolve: @escaping RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
+        guard let terraRT = TerraRtReact.terraRt else {
+            resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
+            return
+        }
+        terraRT.stopWatchOSWorkout()
+        resolve(["success": true])
+    }
 }
