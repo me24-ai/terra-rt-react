@@ -253,8 +253,15 @@ class TerraRtReact: NSObject {
             resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
             return
         }
-        terraRT.pauseWatchOSWorkout()
-        resolve(["success": true])
+        terraRT.pauseWatchOSWorkout { [weak self] success, error in
+            DispatchQueue.main.async {
+                if success {
+                    resolve(["success": true])
+                } else {
+                    resolve(["success": false, "error": error?.localizedDescription ?? "Failed to pause workout"])
+                }
+            }
+        }
     }
 
     @objc(resumeWatchOSWorkout:withRejecter:)
@@ -263,8 +270,15 @@ class TerraRtReact: NSObject {
             resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
             return
         }
-        terraRT.resumeWatchOSWorkout()
-        resolve(["success": true])
+        terraRT.resumeWatchOSWorkout { [weak self] success, error in
+            DispatchQueue.main.async {
+                if success {
+                    resolve(["success": true])
+                } else {
+                    resolve(["success": false, "error": error?.localizedDescription ?? "Failed to resume workout"])
+                }
+            }
+        }
     }
 
     @objc(stopWatchOSWorkout:withRejecter:)
@@ -273,7 +287,14 @@ class TerraRtReact: NSObject {
             resolve(["success": false, "error": "Please initialise a terra class by using `initTerra` first"])
             return
         }
-        terraRT.stopWatchOSWorkout()
-        resolve(["success": true])
+        terraRT.stopWatchOSWorkout { [weak self] success, error in
+            DispatchQueue.main.async {
+                if success {
+                    resolve(["success": true])
+                } else {
+                    resolve(["success": false, "error": error?.localizedDescription ?? "Failed to stop workout"])
+                }
+            }
+        }
     }
 }
