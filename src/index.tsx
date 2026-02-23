@@ -3,6 +3,7 @@ import type {
   ConnectedDeviceResponse,
   Device,
   GetUserId,
+  MirroredWorkoutStartResponse,
   SuccessMessage,
 } from './types';
 import type { Connections, DataTypes } from './enums';
@@ -103,4 +104,16 @@ export function disconnect(connections: Connections): Promise<SuccessMessage> {
 
 export function connectWithWatchOS(): Promise<SuccessMessage> {
   return TerraRtReact.connectWithWatchOS();
+}
+
+export function startWatchApp(): Promise<SuccessMessage> {
+  return TerraRtReact.startWatchApp();
+}
+
+export function configureWorkoutSessionMirroringStartHandler(): Promise<SuccessMessage> {
+  return TerraRtReact.configureWorkoutSessionMirroringStartHandler();
+}
+
+export function getLastMirroredWorkoutStart(): Promise<MirroredWorkoutStartResponse> {
+  return TerraRtReact.getLastMirroredWorkoutStart();
 }

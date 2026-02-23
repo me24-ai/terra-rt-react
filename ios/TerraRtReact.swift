@@ -1,10 +1,14 @@
 import Foundation
 import TerraRTiOS
+import HealthKit
 
 @objc(TerraRtReact)
 class TerraRtReact: NSObject {
 
     public static var terraRt: TerraRT? = nil
+    private static var healthStore: HKHealthStore? = nil
+    private static var mirroringHandlerConfigured: Bool = false
+    private static var lastMirroredWorkoutStartMs: NSNumber? = nil
     private static var scannedDevices: [String: Device] = [:]
 
     static func cacheScannedDevice(_ device: Device) {
@@ -245,6 +249,74 @@ class TerraRtReact: NSObject {
         catch{
             resolve(["success": false, "error": error.localizedDescription])
         }
+    }
+
+    @objc(startWatchApp:withRejecter:)
+    func startWatchApp(resolve: @escaping RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
+        guard HKHealthStore.isHealthDataAvailable() else {
+            resolve(["success": false, "error": "Health data is not available on this device"])
+            return
+        }
+
+        if #available(iOS 10.0, *) {
+            let healthStore = HKHealthStore()
+            let configuration = HKWorkoutConfiguration()
+            configuration.activityType = .traditionalStrengthTraining
+            configuration.locationType = .indoor
+
+            healthStore.startWatchApp(with: configuration) { success, error in
+                if let error {
+                    resolve(["success": success, "error": error.localizedDescription])
+                    return
+                }
+
+                resolve(["success": success, "error": NSNull()])
+            }
+            return
+        }
+
+        resolve(["success": false, "error": "startWatchApp requires iOS 10+"])
+    }
+
+    @objc(configureWorkoutSessionMirroringStartHandler:withRejecter:)
+    func configureWorkoutSessionMirroringStartHandler(resolve: @escaping RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
+        guard HKHealthStore.isHealthDataAvailable() else {
+            resolve(["success": false, "error": "Health data is not available on this device"])
+            return
+        }
+
+        if #available(iOS 17.0, *) {
+            if TerraRtReact.mirroringHandlerConfigured {
+                resolve(["success": true, "error": NSNull()])
+                return
+            }
+
+            let healthStore = HKHealthStore()
+            TerraRtReact.healthStore = healthStore
+
+            healthStore.workoutSessionMirroringStartHandler = { mirroredSession in
+                let startedAtMs = NSNumber(value: Int(Date().timeIntervalSince1970 * 1000.0))
+                TerraRtReact.lastMirroredWorkoutStartMs = startedAtMs
+                let activityType = mirroredSession.workoutConfiguration.activityType.rawValue
+                let locationType = mirroredSession.workoutConfiguration.locationType.rawValue
+                print("[TerraRtReact] 🪞 workoutSessionMirroringStartHandler fired | startedAtMs=\(startedAtMs) activityType=\(activityType) locationType=\(locationType)")
+            }
+
+            TerraRtReact.mirroringHandlerConfigured = true
+            resolve(["success": true, "error": NSNull()])
+            return
+        }
+
+        resolve(["success": false, "error": "workoutSessionMirroringStartHandler requires iOS 17+"])
+    }
+
+    @objc(getLastMirroredWorkoutStart:withRejecter:)
+    func getLastMirroredWorkoutStart(resolve: @escaping RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) -> Void {
+        resolve([
+            "success": true,
+            "error": NSNull(),
+            "timestamp": TerraRtReact.lastMirroredWorkoutStartMs ?? NSNull(),
+        ])
     }
 
     @objc(pauseWatchOSWorkout:withRejecter:)

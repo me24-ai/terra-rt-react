@@ -46,6 +46,15 @@ RCT_EXTERN_METHOD(getConnectedDevice:(RCTPromiseResolveBlock)resolve
 RCT_EXTERN_METHOD(connectWithWatchOS:(RCTPromiseResolveBlock)resolve
                   withRejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(startWatchApp:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(configureWorkoutSessionMirroringStartHandler:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(getLastMirroredWorkoutStart:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(pauseWatchOSWorkout:(RCTPromiseResolveBlock)resolve
                   withRejecter:(RCTPromiseRejectBlock)reject)
 

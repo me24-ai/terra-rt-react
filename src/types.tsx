@@ -14,6 +14,12 @@ export type ConnectedDeviceResponse = {
   device: Device | null;
 };
 
+export type MirroredWorkoutStartResponse = {
+  success: Boolean;
+  error: String | null;
+  timestamp: number | null;
+};
+
 export type Update = {
   ts: String | null;
   val: number | null;
