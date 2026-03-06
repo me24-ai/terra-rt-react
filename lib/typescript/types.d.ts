@@ -1,0 +1,30 @@
+export type GetUserId = {
+    success: Boolean;
+    userId: String | null;
+};
+export type SuccessMessage = {
+    success: Boolean;
+    error: String | null;
+};
+export type ConnectedDeviceResponse = {
+    success: Boolean;
+    error: String | null;
+    device: Device | null;
+};
+export type MirroredWorkoutStartResponse = {
+    success: Boolean;
+    error: String | null;
+    timestamp: number | null;
+};
+export type Update = {
+    ts: String | null;
+    val: number | null;
+    type: String | null;
+    d: Array<number> | null;
+};
+export type Device = {
+    id: String | null;
+    name: String | null;
+    type: String;
+};
+//# sourceMappingURL=types.d.ts.map

@@ -1,0 +1,21 @@
+import type { ConnectedDeviceResponse, Device, GetUserId, MirroredWorkoutStartResponse, SuccessMessage } from './types';
+import type { Connections, DataTypes } from './enums';
+export * from './types';
+export * from './enums';
+export { BLWidget } from './BLWidget';
+export type { BLWidgetProps } from './BLWidget';
+export declare function initTerra(devId: String, referenceId?: String): Promise<SuccessMessage>;
+export declare function initConnection(token: String): Promise<SuccessMessage>;
+export declare function getUserId(): Promise<GetUserId>;
+export declare function startDeviceScan(connections: Connections, useCache?: Boolean, showWidgetIfCacheNotFound?: Boolean): Promise<SuccessMessage>;
+export declare function startDeviceScanWithCallback(connections: Connections): Promise<SuccessMessage>;
+export declare function connectDevice(device: Device): Promise<SuccessMessage>;
+export declare function getConnectedDevice(): Promise<ConnectedDeviceResponse>;
+export declare function startRealtime(connections: Connections, dataTypes: Array<DataTypes>, token?: String | null): Promise<SuccessMessage>;
+export declare function stopRealtime(connections: Connections): Promise<SuccessMessage>;
+export declare function disconnect(connections: Connections): Promise<SuccessMessage>;
+export declare function connectWithWatchOS(): Promise<SuccessMessage>;
+export declare function startWatchApp(): Promise<SuccessMessage>;
+export declare function configureWorkoutSessionMirroringStartHandler(): Promise<SuccessMessage>;
+export declare function getLastMirroredWorkoutStart(): Promise<MirroredWorkoutStartResponse>;
+//# sourceMappingURL=index.d.ts.map

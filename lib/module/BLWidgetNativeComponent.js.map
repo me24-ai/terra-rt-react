@@ -1,0 +1,1 @@
+{"version":3,"names":["codegenNativeComponent","excludedPlatforms"],"sourceRoot":"../../src","sources":["BLWidgetNativeComponent.ts"],"mappings":"AAEA,OAAOA,sBAAsB,MAAM,yDAAyD;AAY5F,eAAeA,sBAAsB,CAAc,UAAU,EAAE;EAC7DC,iBAAiB,EAAE,CAAC,SAAS;AAC/B,CAAC,CAAC"}
